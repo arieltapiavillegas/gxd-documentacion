@@ -119,7 +119,7 @@ En esta sección se define qué dimensiones se medirán en el proceso:
 - Si un módulo queda con **0%**, la nota obtenida en ese módulo se considera **referencial (sin efecto)**:
   - no se incorpora al cálculo del **promedio**,
   - no afecta la **nota final** del colaborador.
-- Cuando una nota calculada tiene **peso 0%**, el sistema la marca con un **asterisco (\*)** en las vistas, y en el **pie de página** se indica que la nota es **sin efecto**.
+- Cuando una nota calculada tiene **peso 0%**, el sistema la marca con un **asterisco (*)** en las vistas, y en el **pie de página** se indica que la nota es **sin efecto**.
 
 ##### 2.1 Competencias (configuración)
 
@@ -213,7 +213,7 @@ Define qué tipos de evaluaciones/relaciones se utilizarán en el proceso.
 - Si un alcance queda con **0%**, la nota obtenida en ese alcance se considera **referencial (sin efecto)**:
   - no se incorpora al cálculo del **promedio**,
   - no afecta la **nota final** del colaborador.
-- Cuando una nota calculada tiene **peso 0%**, el sistema la marca con un **asterisco (\*)** en las vistas, y en el **pie de página** se indica que la nota es **sin efecto**.
+- Cuando una nota calculada tiene **peso 0%**, el sistema la marca con un **asterisco (*)** en las vistas, y en el **pie de página** se indica que la nota es **sin efecto**.
 
 #### 5) Cálculo de resultados
 
@@ -734,6 +734,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 **Acciones disponibles**
 
 - **Agregar colaborador**
+  - Solo se pueden añadir colaboradores que no estén participando en el proceso sobre las áreas que sí están participando. Las áreas que no participan en el proceso no pueden añadir colaboradores a través de esta opción.
   - API para popular el modal:
     - `GET performance-process/anadir-colaborador-post-inicio` → `PerformanceProcessController->actionAnadirColaboradorPostInicio`
   - API para procesar la acción:
@@ -804,7 +805,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
   - `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPositions`
   - `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAddcargo`
   - `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionErase`
-  - `controllers/PerformanceProcessAreaController.php` → `PerformanceProcessAreaController->actionDelete`
+  - `controllers/PerformanceProcessAreaController.php" -> "PerformanceProcessAreaController->actionDelete`
   - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestion`
   - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestion`
   - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestionPersona`
@@ -836,4 +837,3 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 - **Recrear tests en lista de evaluaciones**: esta opción puede volver a asignar tests a un usuario, incluyendo evaluaciones que hayan sido eliminadas o estén en estado **soft-deleted**. Esto puede generar duplicados. Ejemplo:
   - si una evaluación 90° fue reasignada a otro evaluador, la evaluación original del jefe actual queda en **soft-delete**;
   - si luego se ejecuta la opción de recrear evaluaciones para ese evaluado, el sistema puede asignar nuevamente la evaluación del jefe actual, dejando al evaluado con **dos** evaluaciones 90° (la reasignada y la re-creada).
-
