@@ -70,7 +70,7 @@ La medición se estructura en **tres áreas**:
   - `views/performance-process/edit-process/accordion-template.php`
   - `views/performance-process/edit-process/commons.php`
 
-- Controlador: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionEdit`
+- Controlador: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionEdit`
 
 - Modelo: `models/PerformanceProcesses.php`
 
@@ -78,7 +78,7 @@ La medición se estructura en **tres áreas**:
 
 
 
-- Ubicación en UI (GXX/Yii2): **Desempeño → Administrar → Crear nuevo proceso**.
+- Ubicación en UI (GXX/Yii2): **Desempeño -> Administrar -> Crear nuevo proceso**.
 
 - El asistente de creación contiene **8 secciones** a completar:
 
@@ -355,19 +355,19 @@ Nota:
 
 **Referencias de implementación (GXX/Yii2)**
 
-- Controlador: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAreas`
+- Controlador: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAreas`
 - Vista: `views/performance-process/_areas.php` (presenta las opciones de **Agregar áreas** y **Reporte de áreas**)
 
 #### Agregar áreas
 
 **Procesamiento de inclusión de áreas**
 
-- La inclusión de áreas se procesa en `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAddarea`.
+- La inclusión de áreas se procesa en `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAddarea`.
 
 - Para cada área seleccionada:
 
   - obtiene los usuarios del área,
-  - valida **uno a uno** si pueden participar usando los criterios definidos en `controllers/PerformanceProcessController.php` → `PerformanceProcessController->usuarioPuedeAnadirse`.
+  - valida **uno a uno** si pueden participar usando los criterios definidos en `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->usuarioPuedeAnadirse`.
 
 - Permite agregar **áreas** al proceso de desempeño.
 
@@ -375,15 +375,15 @@ Nota:
 
 - Al incluir áreas, el sistema incorpora automáticamente al proceso a **todas las personas** del/las área(s) seleccionada(s) que estén **habilitadas para participar** en un proceso de desempeño.
 
-**Criterio de elegibilidad de personas (GXX/Yii2)** La validación de si un usuario puede añadirse al proceso se realiza en `controllers/PerformanceProcessController.php` → `PerformanceProcessController->usuarioPuedeAnadirse`, y aplica estas validaciones (en orden lógico):
+**Criterio de elegibilidad de personas (GXX/Yii2)** La validación de si un usuario puede añadirse al proceso se realiza en `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->usuarioPuedeAnadirse`, y aplica estas validaciones (en orden lógico):
 
-1. **Validación base del usuario** (`models/CtvUsers.php` → `CtvUsers->is_valid`):
+1. **Validación base del usuario** (`models/CtvUsers.php` -> `CtvUsers->is_valid`):
    - `ctv_users.status == 1`.
    - El usuario pertenece a la institución del proceso (`CtvUsers->getPertenece($institution_id)`).
 2. El usuario **no** está **eliminado**.
 3. El usuario ocupa un **cargo vigente**.
 4. **Antigüedad mínima**:
-   - Se valida con `controllers/PerformanceProcessController.php` → `PerformanceProcessController->validarAntiguedadInstitucion`.
+   - Se valida con `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->validarAntiguedadInstitucion`.
    - Se calcula la antigüedad efectiva (en **meses**) desde la **fecha de contratación** registrada en `ctv_user_belongs_institution` hasta la **fecha de término del proceso**.
 5. El usuario **no** ha sido añadido a **otra área** dentro del **mismo proceso**.
 
@@ -393,8 +393,8 @@ Nota:
 
 - Controlador (AJAX / data):
 
-  - `controllers/PerformanceProcessAreaController.php` → `PerformanceProcessAreaController->actionReporteAreas` (trae por AJAX la información de la **lista de áreas**).
-  - `controllers/PerformanceProcessAreaController.php` → `PerformanceProcessAreaController->actionReporteColaboradores` (trae por AJAX la **lista de colaboradores** con su estado; reutiliza el mismo esquema de validaciones de elegibilidad documentado en **Agregar áreas**).
+  - `controllers/PerformanceProcessAreaController.php` -> `PerformanceProcessAreaController->actionReporteAreas` (trae por AJAX la información de la **lista de áreas**).
+  - `controllers/PerformanceProcessAreaController.php` -> `PerformanceProcessAreaController->actionReporteColaboradores` (trae por AJAX la **lista de colaboradores** con su estado; reutiliza el mismo esquema de validaciones de elegibilidad documentado en **Agregar áreas**).
 
 - Opción que permite ver, **área por área**:
 
@@ -425,11 +425,11 @@ Nota:
   - muestra la lista de personas del área **participen o no** en el proceso, con su **estado**;
   - reutiliza el mismo esquema de validación/estado usado en el detalle de colaboradores del **Reporte de áreas**.
 - **Remover colaborador**:
-  - endpoint: `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionDelete`
-  - internamente llama a: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->removeCollaborator`.
+  - endpoint: `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionDelete`
+  - internamente llama a: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->removeCollaborator`.
 - **Eliminar área**:
-  - endpoint: `controllers/PerformanceProcessAreaController.php` → `PerformanceProcessAreaController->actionDelete`
-  - elimina los colaboradores del área del proceso reutilizando `controllers/PerformanceProcessController.php` → `PerformanceProcessController->removeCollaborator`.
+  - endpoint: `controllers/PerformanceProcessAreaController.php` -> `PerformanceProcessAreaController->actionDelete`
+  - elimina los colaboradores del área del proceso reutilizando `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->removeCollaborator`.
 
 ---
 
@@ -439,11 +439,11 @@ Nota:
 
 - Vista: `views/performance-process/_cargos.php`
 
-- Controlador (vista / modal): `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPositions`
+- Controlador (vista / modal): `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionPositions`
 
-- Endpoint agregar cargo: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAddcargo`
+- Endpoint agregar cargo: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAddcargo`
 
-- Endpoint eliminar cargo: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionErase`
+- Endpoint eliminar cargo: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionErase`
 
 - Presenta la lista de **cargos** ostentados por las personas que están participando en el proceso de desempeño.
 
@@ -455,7 +455,7 @@ Nota:
 
 **Construcción del modal/formulario (Agregar cargos)**
 
-- `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPositions`:
+- `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionPositions`:
   - obtiene la lista de personas de **todas las áreas** que están participando en el proceso;
   - identifica cuáles **aún no** están participando en el proceso;
   - valida cuáles de esas personas **pueden participar** (según criterios de elegibilidad);
@@ -465,7 +465,7 @@ Nota:
 
 **Referencias de implementación (GXX/Yii2)**
 
-- Controlador: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionViews`
+- Controlador: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionViews`
 
 - Vista: `views/performance-process-positions/views.php`
 
@@ -487,18 +487,18 @@ Nota:
 
 Endpoints:
 
-- Eliminar cliente: `controllers/PerformanceProcessPositionClientsController.php` → `PerformanceProcessPositionClientsController->actionEliminar`
-- Añadir cliente: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionAddcliente`
-- Eliminar proveedor: `controllers/PerformanceProcessPositionSuppliersController.php` → `PerformanceProcessPositionSuppliersController->actionEliminar`
-- Añadir proveedor: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionAddProveedor`
+- Eliminar cliente: `controllers/PerformanceProcessPositionClientsController.php` -> `PerformanceProcessPositionClientsController->actionEliminar`
+- Añadir cliente: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionAddcliente`
+- Eliminar proveedor: `controllers/PerformanceProcessPositionSuppliersController.php` -> `PerformanceProcessPositionSuppliersController->actionEliminar`
+- Añadir proveedor: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionAddProveedor`
 
 #### Eliminar cargos
 
-- Se realiza mediante `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionErase`.
+- Se realiza mediante `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionErase`.
 - Comportamiento:
   - busca todas las personas que tienen el **cargo** indicado;
-  - las elimina del proceso reutilizando `controllers/PerformanceProcessController.php` → `PerformanceProcessController->removeCollaborator`.
-- `controllers/PerformanceProcessController.php` → `PerformanceProcessController->removeCollaborator`:
+  - las elimina del proceso reutilizando `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->removeCollaborator`.
+- `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->removeCollaborator`:
   - remueve al colaborador de todas las tablas correspondientes del proceso;
   - elimina información adicional asociada al proceso para esa persona.
 
@@ -523,13 +523,13 @@ Endpoints:
 
    **Referencias de implementación (GXX/Yii2)**
 
-   - Controlador: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionOpenQuestions`
+   - Controlador: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionOpenQuestions`
    - Vista: `views/performance-process/_openquestions.php`
 
    **Endpoints (crear/eliminar)**
 
-   - Guardar pregunta global: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestion`
-   - Eliminar pregunta global: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestion`
+   - Guardar pregunta global: `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestion`
+   - Eliminar pregunta global: `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionDeletequestion`
 
 2. **Preguntas abiertas para un área**
 
@@ -538,8 +538,8 @@ Endpoints:
 
    **Endpoints (crear/eliminar)**
 
-   - Guardar pregunta por área: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestionArea`
-   - Eliminar pregunta por área: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestionArea`
+   - Guardar pregunta por área: `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionSavequestionArea`
+   - Eliminar pregunta por área: `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionDeletequestionArea`
 
 3. **Preguntas abiertas para un cargo**
 
@@ -548,8 +548,8 @@ Endpoints:
 
    **Endpoints (crear/eliminar)**
 
-   - Guardar pregunta por cargo: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestion`
-   - Eliminar pregunta por cargo: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestionArea`
+   - Guardar pregunta por cargo: `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestion`
+   - Eliminar pregunta por cargo: `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionDeletequestionArea`
 
 4. **Preguntas abiertas para una persona**
 
@@ -558,8 +558,8 @@ Endpoints:
 
    **Endpoints (crear/eliminar)**
 
-   - Guardar pregunta por persona: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestionPersona`
-   - Eliminar pregunta por persona: `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestionPersona`
+   - Guardar pregunta por persona: `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionSavequestionPersona`
+   - Eliminar pregunta por persona: `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionDeletequestionPersona`
 
 ---
 
@@ -579,9 +579,9 @@ Endpoints:
 
 **Referencias de implementación (GXX/Yii2)**
 
-- Controlador: `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionView`
+- Controlador: `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionView`
 - Vista: `views/performance-process-competence/view.php`
-- Endpoint eliminar competencia: `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionDelete`
+- Endpoint eliminar competencia: `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionDelete`
 
 **Editar competencias (reactivos por alcance)**
 
@@ -591,13 +591,13 @@ Endpoints:
   - 180° (ascendente),
   - cliente interno,
   - proveedor interno.
-- Guardar configuración de reactivos: `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionEditcompetence`
+- Guardar configuración de reactivos: `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionEditcompetence`
 
 **Editar ponderación de competencias (global)**
 
 - En la vista de competencias globales existe una opción para modificar la **ponderación** de las competencias.
-- Endpoint que trae datos para construir el modal: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAjax_search_competences`
-- Endpoint que guarda las ponderaciones: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionSavePonderacion`
+- Endpoint que trae datos para construir el modal: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAjax_search_competences`
+- Endpoint que guarda las ponderaciones: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionSavePonderacion`
 
 **Añadir competencia (global)**
 
@@ -614,7 +614,7 @@ Endpoints:
 
 **Referencias (vista/endpoint de creación)**
 
-- Controlador: `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionCreate` (GET vista / POST creación)
+- Controlador: `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionCreate` (GET vista / POST creación)
 - Vista: `views/performance-process-competence/create.php`
 
 2. **Configuración de competencias para cargos**
@@ -629,14 +629,14 @@ Endpoints:
   - 180° (ascendente),
   - cliente interno,
   - proveedor interno.
-- Controlador: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionReagents`
+- Controlador: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionReagents`
 - Vista: `views/performance-process-positions/reagents.php`
-- Guardar configuración de reactivos: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionEditcompetence`
+- Guardar configuración de reactivos: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionEditcompetence`
 
 Endpoints:
 
-- Añadir competencia por cargo: `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionAddcompetence`
-- Eliminar competencia por cargo: `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionDeletecompetencepos`
+- Añadir competencia por cargo: `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionAddcompetence`
+- Eliminar competencia por cargo: `controllers/PerformanceProcessCompetenceController.php" -> "PerformanceProcessCompetenceController->actionDeletecompetencepos`
 
 3. **Configuración de competencias para personas**
 
@@ -650,14 +650,14 @@ Endpoints:
   - 180° (ascendente),
   - cliente interno,
   - proveedor interno.
-- Controlador: `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionReagents`
+- Controlador: `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionReagents`
 - Vista: `views/performance-process-area-user/reagents.php`
-- Guardar configuración de reactivos: `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionEditcompetence`
+- Guardar configuración de reactivos: `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionEditcompetence`
 
 **Endpoints**
 
-- Añadir competencia (persona): `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionAddcompetence`
-- Eliminar competencia (persona): `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionDeletecompetenceuser`
+- Añadir competencia (persona): `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionAddcompetence`
+- Eliminar competencia (persona): `controllers/PerformanceProcessAreaUserController.php" -> "PerformanceProcessAreaUserController->actionDeletecompetenceuser`
 
 ---
 
@@ -688,12 +688,12 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 
 **Endpoints (modal / selección de tareas por alcance)**
 
-- Traer datos que se muestran en el modal: `controllers/PerformanceProcessFunctionsController.php` → `PerformanceProcessFunctionsController->actionTasksScope`
-- Procesar selecciones del modal: `controllers/PerformanceProcessFunctionsController.php` → `PerformanceProcessFunctionsController->actionChangeTasksScope`
+- Traer datos que se muestran en el modal: `controllers/PerformanceProcessFunctionsController.php` -> `PerformanceProcessFunctionsController->actionTasksScope`
+- Procesar selecciones del modal: `controllers/PerformanceProcessFunctionsController.php` -> `PerformanceProcessFunctionsController->actionChangeTasksScope`
 
 **Añadir función de cargo (modal)**
 
-- Endpoint para llenar el modal de añadir función: `controllers/PerformanceProcessFunctionsController.php` → `PerformanceProcessFunctionsController->actionListEmptyFunctions`
+- Endpoint para llenar el modal de añadir función: `controllers/PerformanceProcessFunctionsController.php` -> `PerformanceProcessFunctionsController->actionListEmptyFunctions`
 - Solo lista funciones de cargo que no tienen tareas participando en el proceso.
 - Luego de elegir la función a añadir, se reutiliza el mismo modal de edición para seleccionar tareas por alcance.
 
@@ -702,7 +702,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 ### Iniciar proceso de desempeño
 
 - Endpoint para dar inicio al proceso de desempeño:
-  - `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionStart`
+  - `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionStart`
 
 ---
 
@@ -726,7 +726,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 - URL:
   - `pruebas-fabrica/gxd?id=ID-PROCESO-DESEMPEÑO&limit=100`
 - Controlador:
-  - `pruebas-fabrica/gxd` → `PruebasFabricaController->actionGxd`
+  - `pruebas-fabrica/gxd` -> `PruebasFabricaController->actionGxd`
 - Parámetros:
   - `id`: ID del proceso de desempeño.
   - `limit`: opcional, por defecto **100**. Responde evaluaciones en lotes de 100 por cada solicitud del URL.
@@ -736,27 +736,27 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 - **Agregar colaborador**
   - Solo se pueden añadir colaboradores que no estén participando en el proceso sobre las áreas que sí están participando. Las áreas que no participan en el proceso no pueden añadir colaboradores a través de esta opción.
   - API para popular el modal:
-    - `GET performance-process/anadir-colaborador-post-inicio` → `PerformanceProcessController->actionAnadirColaboradorPostInicio`
+    - `GET performance-process/anadir-colaborador-post-inicio` -> `PerformanceProcessController->actionAnadirColaboradorPostInicio`
   - API para procesar la acción:
-    - `POST performance-process/anadir-colaborador-post-inicio` → `PerformanceProcessController->actionAnadirColaboradorPostInicio`
+    - `POST performance-process/anadir-colaborador-post-inicio` -> `PerformanceProcessController->actionAnadirColaboradorPostInicio`
   - Al procesar la acción se notifica por email a los evaluadores asignados como evaluaciones pendientes.
 - **Descargar detalles**
 - **Notificar evaluadores pendientes**
-  - **Descripción**: Esta opción envía un recordatorio de que tienen evaluaciones pendientes solamente a aquellos evaluadores que tienen por lo menos una evaluación en estatus de pendiente.
-  - **Controlador**: `PerformanceProcessController->actionEnviarRecordatorioResponderTests`.
+  - Esta opción envía un recordatorio de que tienen evaluaciones pendientes solamente a aquellos evaluadores que tienen por lo menos una evaluación en estatus de pendiente.
+  - Controlador: `PerformanceProcessController->actionEnviarRecordatorioResponderTests`.
 - **Eliminar colaboradores**
-  - **Controlador Vista listado**: `PerformanceProcessController->actionFilterTests`.
-  - **Vista**: `/views/performance-process/filter_tests.php`.
-  - **Controlador API Procesar eliminación**: `PerformanceProcessController->actionEliminarParticipants`.
+  - Controlador Vista listado: `PerformanceProcessController->actionFilterTests`.
+  - Vista: `/views/performance-process/filter_tests.php`.
+  - Controlador API Procesar eliminacion: `PerformanceProcessController->actionEliminarParticipants`.
 - **Responder evaluación como administrador**:
   - abre la plantilla para responder la evaluación asignada al evaluador, pero desde el punto de vista del **administrador**.
-  - Controlador: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPoll` (ruta: `performance-process/poll`)
+  - Controlador: `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionPoll` (ruta: `performance-process/poll`)
   - Vista: `views/performance-process/poll.php`
-  - Guardar respuestas: `performance-process/savepoll` → `PerformanceProcessController->actionSavepoll`
+  - Guardar respuestas: `performance-process/savepoll` -> `PerformanceProcessController->actionSavepoll`
 - **Cambiar evaluador**:
   - permite seleccionar un nuevo evaluador desde la lista de todos los usuarios activos de la institución. **API para popular el modal (lista de evaluadores)**
-  - `performance-process/editar-evaluator-test` → `PerformanceProcessController->actionEditarEvaluatorTest` *API para procesar el cambio de evaluador*
-  - `performance-process/editar-evaluator-test` → `PerformanceProcessController->actionEditarEvaluatorTest`
+  - `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest` *API para procesar el cambio de evaluador*
+  - `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest`
   - Nota: requiere que el usuario tenga una entrada en `ctv_user_profiles`; si no existe, se produce error.
   - Comportamiento:
     - el test asignado al evaluador actual queda en estatus **soft-deleted**,
@@ -764,9 +764,9 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 - **Cambiar estatus**:
   - la evaluación solo puede ser llevada a un siguiente estatus, acorde a la lista de transiciones permitidas. **API para popular el modal con opciones**
 
-  - `performance-process/editar-status-test` → `PerformanceProcessController->actionEditarStatusTest` **API para procesar cambio de estatus**
+  - `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest` **API para procesar cambio de estatus**
 
-  - `performance-process/editar-status-test` → `PerformanceProcessController->actionEditarStatusTest`
+  - `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest`
 
   - Transiciones permitidas referidas en el modelo `PerformanceTests` en la constante `STATUS_FLUJO`:
 
@@ -784,7 +784,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
   - permite asignar tests al colaborador debido a movimientos en la estructura organizacional de la institución, donde pueden aparecer nuevos actores que no fueron considerados al inicio del proceso.
   - Esta revisión se realiza regenerando todos los tests que debería recibir el colaborador evaluado con los actores actuales del organigrama. Si detecta que una evaluación ya fue asignada, la omite.
   - Controlador:
-    - `performance-process/fix-tests-for-user` → `PerformanceProcessController->actionFixTestsForUser`
+    - `performance-process/fix-tests-for-user` -> `PerformanceProcessController->actionFixTestsForUser`
   - Ejemplo URL:
     - `performance-process/fix-tests-for-user?user_id=142262&process_id=780`
   - UI:
@@ -807,28 +807,28 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 ### 2) Validaciones/seguridad en endpoints
 
 - No validan acceso ni congruencia de datos; ejecutan la acción “a ciegas”:
-  - `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPositions`
-  - `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionAddcargo`
-  - `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionErase`
+  - `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionPositions`
+  - `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAddcargo`
+  - `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionErase`
   - `controllers/PerformanceProcessAreaController.php" -> "PerformanceProcessAreaController->actionDelete`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestion`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestion`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestionPersona`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestionPersona`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionSavequestionArea`
-  - `controllers/OpenQuestionsController.php` → `OpenQuestionsController->actionDeletequestionArea`
-  - `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionAddcompetence`
-  - `controllers/PerformanceProcessAreaUserController.php` → `PerformanceProcessAreaUserController->actionDeletecompetenceuser`
-  - `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionCreate`
-  - `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionDelete`
-  - `controllers/PerformanceProcessPositionsController.php` → `PerformanceProcessPositionsController->actionAddcompetence`
-  - `controllers/PerformanceProcessCompetenceController.php` → `PerformanceProcessCompetenceController->actionDeletecompetencepos`
+  - `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestion`
+  - `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionDeletequestion`
+  - `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionSavequestionPersona`
+  - `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionDeletequestionPersona`
+  - `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionSavequestionArea`
+  - `controllers/OpenQuestionsController.php" -> "OpenQuestionsController->actionDeletequestionArea`
+  - `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionAddcompetence`
+  - `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionDeletecompetenceuser`
+  - `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionCreate`
+  - `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionDelete`
+  - `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionAddcompetence`
+  - `controllers/PerformanceProcessCompetenceController.php" -> "PerformanceProcessCompetenceController->actionDeletecompetencepos`
 
 ### 3) Errores
 
-- Si el evaluador o el evaluado no cuentan con un registro en la tabla `ctv_user_profiles`, la opción de **Descargar detalles** en la vista de evaluaciones fallará.
-  - **Controlador**: `ExportController->actionViewExcelDetails`.
-- Cuando se eliminan colaboradores de un proceso de desempeño, el área a la que pertenecen es eliminada automáticamente de la configuración del proceso (aparentemente por un trigger en BD o un evento en Yii2). Debido a esto, si posteriormente se desea añadir a un colaborador del área eliminada, la acción no es posible desde el frontend.
+- Si el evaluador o el evaluado no tienen profile, la opción de descargar datos en la vista de evaluaciónes fallará.
+  - Controlador: `ExportController->actionViewExcelDetails`.
+- Cuando se eliminan colaboradores de un proceso de desempeño, el área a la que pertenecen es eliminada automáticamente porque al parecer existe un trigger en BD o evento en Yii2 que realiza eso. Si luego se quiere añadir al proceso algún colaborador del area eliminada, no sería posible desde el front.
 - Al añadir una competencia desde la vista de **personas** no funciona correctamente:
   - UI muestra: “competencias agregadas exitosamente”.
   - Endpoint retorna excepción:
@@ -838,7 +838,7 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 - Al eliminar competencias desde la vista de **cargos**, los porcentajes de peso no se redistribuyen para volver a sumar **100%** (se evidencia al eliminar la misma competencia de todos los cargos que la tienen).
 - Al añadir una competencia desde la vista de **cargos**, la competencia se carga **sin reactivos** (debería cargar reactivos por defecto según el máximo configurado en el proceso). Muchas veces finaliza con error.
 - Al añadir una competencia desde la vista de **cargos**, la competencia se carga con un peso fijo de **1%**, provocando que el peso global de la competencia en el proceso sea **1%** (visible en la vista de **competencias globales**, donde se indican los pesos).
-- Al iniciar un proceso de desempeño, el mensaje “El usuario (\$user\_id) no encontrado” está relacionado a que la persona no tiene registro en la tabla `ctv_user_profiles`. Esto ocurre específicamente cuando la persona es añadida como **evaluadora** al momento de asignarse una evaluación que debe responder. La validación/uso se realiza en `controllers/PerformanceProcessController.php` → `PerformanceProcessController->usuarioPuedeSerEvaluador`.
+- Al iniciar un proceso de desempeño, el mensaje “El usuario (\$user\_id) no encontrado” está relacionado a que la persona no tiene registro en la tabla `ctv_user_profiles`. Esto ocurre específicamente cuando la persona es añadida como **evaluadora** al momento de asignarse una evaluación que debe responder. La validación/uso se realiza en `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->usuarioPuedeSerEvaluador`.
 - Cuando una persona es eliminada de la plataforma y el problema persiste (“El usuario (\$user\_id) no encontrado”), si su registro aún existe en:
   - `ctv_gxd_performance_process_position_clients.client_user_id`, o
   - `ctv_gxd_performance_process_position_suppliers.supplier_user_id`, el error seguirá ocurriendo porque el proceso ya tiene cargada la relación de cargos previa. En ese caso, se debe eliminar manualmente el registro de la persona que genera el problema desde la tabla correspondiente.
