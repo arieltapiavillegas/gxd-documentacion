@@ -742,7 +742,12 @@ Al editar una función se presenta un **modal** que permite visualizar la config
   - Al procesar la acción se notifica por email a los evaluadores asignados como evaluaciones pendientes.
 - **Descargar detalles**
 - **Notificar evaluadores pendientes**
+  - **Descripción**: Esta opción envía un recordatorio de que tienen evaluaciones pendientes solamente a aquellos evaluadores que tienen por lo menos una evaluación en estatus de pendiente.
+  - **Controlador**: `PerformanceProcessController->actionEnviarRecordatorioResponderTests`.
 - **Eliminar colaboradores**
+  - **Controlador Vista listado**: `PerformanceProcessController->actionFilterTests`.
+  - **Vista**: `/views/performance-process/filter_tests.php`.
+  - **Controlador API Procesar eliminación**: `PerformanceProcessController->actionEliminarParticipants`.
 - **Responder evaluación como administrador**:
   - abre la plantilla para responder la evaluación asignada al evaluador, pero desde el punto de vista del **administrador**.
   - Controlador: `controllers/PerformanceProcessController.php` → `PerformanceProcessController->actionPoll` (ruta: `performance-process/poll`)
@@ -821,6 +826,9 @@ Al editar una función se presenta un **modal** que permite visualizar la config
 
 ### 3) Errores
 
+- Si el evaluador o el evaluado no cuentan con un registro en la tabla `ctv_user_profiles`, la opción de **Descargar detalles** en la vista de evaluaciones fallará.
+  - **Controlador**: `ExportController->actionViewExcelDetails`.
+- Cuando se eliminan colaboradores de un proceso de desempeño, el área a la que pertenecen es eliminada automáticamente de la configuración del proceso (aparentemente por un trigger en BD o un evento en Yii2). Debido a esto, si posteriormente se desea añadir a un colaborador del área eliminada, la acción no es posible desde el frontend.
 - Al añadir una competencia desde la vista de **personas** no funciona correctamente:
   - UI muestra: “competencias agregadas exitosamente”.
   - Endpoint retorna excepción:
