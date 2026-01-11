@@ -78,7 +78,7 @@ La medición se estructura en **tres áreas**:
 
 
 
-- Ubicación en UI (GXX/Yii2): **Desempeño -> Administrar -> Crear nuevo proceso**.
+- Ubicación en UI (GXX/Yii2): **Desempeño → Administrar → Crear nuevo proceso**.
 
 - El asistente de creación contiene **8 secciones** a completar:
 
