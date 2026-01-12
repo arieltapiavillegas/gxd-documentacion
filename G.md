@@ -31,7 +31,7 @@ Internamente llama a 
 
 /mail/send-test-reminder.php
 
----
+
 
 ## 2) (GXX) Notificación manual de evaluaciones pendientes
 
@@ -61,7 +61,7 @@ Internamente llama a 
 
 /mail/send-test-reminder.php
 
----
+
 
 ## 2) (GXX) Notificación a evaluadores por colaborador agregado “post-inicio”
 
@@ -91,7 +91,7 @@ Internamente llama a 
 
 /mail/send-test-reminder.php
 
----
+
 
 ## 3) (GXX) Recordatorio manual a evaluadores con evaluaciones pendientes
 
@@ -123,7 +123,7 @@ Internamente llama a 
 
 
 
----
+
 
 ## 4) (GXX) Al cambiar un evaluador de un test, correo al nuevo evaluador
 
@@ -155,7 +155,7 @@ Que invoca directamente \$app->mailer sin reutilizar las funciones de notificac
 
 /mail/test-notificar-asignacion-evaluator.php
 
----
+
 
 ## 5) (GXX) Al eliminar un colaborador
 
@@ -187,7 +187,7 @@ Internamente llaman a 
 
 /mail/send-test-reminder.php
 
----
+
 
 ## 6) (GXX) Al recrear tests perdidos
 
@@ -217,7 +217,7 @@ Internamente llama a 
 
 /mail/send-test-reminder.php
 
----
+
 
 ## 7) (GXX) Totalizar notas -> no manda correo
 
@@ -225,7 +225,7 @@ Internamente llama a 
 
 Esta funcionalidad fue eliminada. Antes se mandaba un email a cada participante del proceso con la nota obtenida.
 
----
+
 
 ## 8) (GXX) Inicio de la etapa de Feedback (correos a jefes y, condicionalmente, a colaboradores)
 
@@ -257,7 +257,7 @@ Se llama directamente e \$mailer->compose
 - Jefes: Lista de personas a realizar feedback\
   /mail/send-results-boss-area.php
 
----
+
 
 ## 9) Citación por agendamiento de reunión de Feedback
 
@@ -289,7 +289,7 @@ Notificación al colaborador confirmando la citación de reunión de feedback (c
 
 
 
----
+
 
 ## 10) (GXX) Notificación al cerrar la evaluación de Feedback
 
