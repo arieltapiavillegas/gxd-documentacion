@@ -3,6 +3,7 @@
 ## D - Cálculo de Resultados
 
 #### Referencias Técnicas
+* **Excel explicativo**: [totalizacion.xlsx](totalizacion.xlsx)
 
 * **Controlador**: (GXX) `PerformanceProcessController->actionResume`
 
