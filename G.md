@@ -1,71 +1,324 @@
 [Volver](README.md)
 
-# G - Pendientes y Errores
+# G - Correos enviados
 
-### 1) Revisar
+## 1) (GXX) Notificación a evaluadores al inicio del proceso
 
-* En `views/performance-process-positions/views.php`, el endpoint de **eliminar preguntas de cargos** apunta al endpoint de **eliminar preguntas de área** (`OpenQuestionsController->actionDeletequestionArea`).
+### Descripción
 
-* **Configuración de sobrecumplimiento en Metas**: Al crear metas en el proceso de desempeño se permite editar la configuración de sobrecumplimiento. Este mismo modal es el que se utiliza para asignar metas desde el módulo de gestión de personas, solo que allá tiene un IF para ocultar la configuración de sobrecumplimiento (fue pedido así desde área de productos). Este IF debería eliminarse ya que se pierde la capacidad de editar todos los campos de una meta. Luego del proceso no sería posible ajustar cambios a estos valores de sobrecumplimiento.
+Se notifica a los evaluadores asignados cuando se da inicio al proceso de desempeño luego que las evaluaciones han sido asignadas.
 
-### 2) Validaciones/seguridad en endpoints
+### Ruta Web
 
-* No validan acceso ni congruencia de datos; ejecutan la acción “a ciegas”:
+/performance-process/status?id=
 
-  * `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionPositions`
+### Ubicación en Front
 
-  * `controllers/PerformanceProcessController.php` -> `PerformanceProcessController->actionAddcargo`
+Menu Configuración -> Resumen.
 
-  * `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionErase`
+Esta es la vista de iniciar proceso de desempeño luego de haber finalizado la configuración del mismo.\
+Botón "Iniciar Proceso".
 
-  * `controllers/PerformanceProcessAreaController.php` -> `PerformanceProcessAreaController->actionDelete`
+### Controlador
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestion`
+`PerformanceProcessController->actionStart`
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionDeletequestion`
+Internamente llama a 
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestionPersona`
+`PerformanceProcessController->sendEmails`
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionDeletequestionPersona`
+### Plantilla Email
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionSavequestionArea`
+/mail/send-test-reminder.php
 
-  * `controllers/OpenQuestionsController.php` -> `OpenQuestionsController->actionDeletequestionArea`
+---
 
-  * `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionAddcompetence`
+## 2) (GXX) Notificación manual de evaluaciones pendientes
 
-  * `controllers/PerformanceProcessAreaUserController.php` -> `PerformanceProcessAreaUserController->actionDeletecompetenceuser`
+### Descripción
 
-  * `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionCreate`
+Se mandan los correos a discresción del administrador a través de una opción directa para ello.
 
-  * `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionDelete`
+### Ruta Web
 
-  * `controllers/PerformanceProcessPositionsController.php` -> `PerformanceProcessPositionsController->actionAddcompetence`
+/performance-process/view-all-tests?id=
 
-  * `controllers/PerformanceProcessCompetenceController.php` -> `PerformanceProcessCompetenceController->actionDeletecompetencepos`
+### Ubicación en Front
 
-### 3) Errores
+Menu Evaluaciones -> Detalle
 
-* **Si el evaluador o el evaluado no cuentan con un registro en la tabla `ctv_user_profiles`, la opción de Descargar detalles en la vista de evaluaciones fallará.**
+Acciones -> **“Notificar evaluadores pendientes”**
 
-  * Controlador: `ExportController->actionViewExcelDetails`.
+### Controlador
 
-* Cuando se eliminan colaboradores de un proceso de desempeño, el área a la que pertenecen es eliminada automáticamente porque al parecer existe un trigger en BD o evento en Yii2 que realiza eso. Si luego se quiere añadir al proceso algún colaborador del area eliminada, no sería posible desde el front.
+`PerformanceProcessController -> actionEnviarRecordatorioResponderTests`
 
-* Al añadir una competencia desde la vista de **personas** no funciona correctamente:
+Internamente llama a 
 
-  * UI muestra: “competencias agregadas exitosamente”.
+`PerformanceProcessController->sendEmails`
 
-  * Endpoint retorna excepción: `yii\base\InvalidArgumentException`: `app\models\PositionCompetences has no relation named \"area\"`.
+### Vista
 
-* Al eliminar competencias desde la vista de **cargos**, los porcentajes de peso no se redistribuyen para volver a sumar **100%**.
+/mail/send-test-reminder.php
 
-* Al añadir una competencia desde la vista de **cargos**, la competencia se carga **sin reactivos** y muchas veces finaliza con error.
+---
 
-* Al añadir una competencia desde la vista de **cargos**, la competencia se carga con un peso fijo de **1%**, provocando que el peso global en el proceso sea erróneo.
+## 2) (GXX) Notificación a evaluadores por colaborador agregado “post-inicio”
 
-* Al iniciar un proceso de desempeño, el mensaje “El usuario ($user_id) no encontrado” ocurre cuando la persona (evaluadora) no tiene registro en la tabla `ctv_user_profiles`. Validación en: `PerformanceProcessController->usuarioPuedeSerEvaluador`.
+### Descripción
 
-* Cuando una persona es eliminada de la plataforma pero su registro persiste en `ctv_gxd_performance_process_position_clients` o `suppliers`, el error seguirá ocurriendo hasta eliminar el registro manualmente de esas tablas.
+Se notifica a los evaluadores asignados cuando se incorpora un colaborador después de iniciado el proceso, porque se generan evaluaciones nuevas.
 
-* **Recrear tests en lista de evaluaciones**: Esta opción puede volver a asignar tests a un usuario, incluyendo evaluaciones que estén en estado **soft-deleted** (como una evaluación 90° reasignada). Esto genera duplicados, dejando al evaluado con dos evaluaciones del mismo tipo activas.
+### Ruta Web
+
+/performance-process/view-all-tests?id=
+
+### Ubicación en Front
+
+Menu Evaluaciones -> Detalle
+
+Acciones -> **“Agregar colaboradores”**
+
+### Controlador
+
+`PerformanceProcessController -> actionAnadirColaboradorPostInicio`
+
+Internamente llama a 
+
+`PerformanceProcessController->sendEmails`
+
+### Vista
+
+/mail/send-test-reminder.php
+
+---
+
+## 3) (GXX) Recordatorio manual a evaluadores con evaluaciones pendientes
+
+### Descripción
+
+Recordatorio disparado manualmente, dirigido únicamente a evaluadores que mantienen al menos una evaluación en estado pendiente.
+
+### Ruta Web
+
+/performance-process/view-all-tests?id=
+
+### Ubicación en Front
+
+Menu Evaluaciones -> Detalle
+
+Acciones -> **“Notificar evaluadores pendientes”**.
+
+### Controlador
+
+`PerformanceProcessController -> actionEnviarRecordatorioResponderTests`
+
+Internamente llama a 
+
+`PerformanceProcessController->sendEmails`
+
+### Vista
+
+/mail/send-test-reminder.php
+
+
+
+---
+
+## 4) (GXX) Al cambiar un evaluador de un test, correo al nuevo evaluador
+
+### Descripción
+
+Se notifica al nuevo evaluador asignado cuando se cambia el evaluador de un test.
+
+### Ruta Web
+
+/performance-process/view-all-tests?id=
+
+### Ubicación en Front
+
+Menu Evaluaciones -> Detalle
+
+Acciones sobre el test -> **“Cambiar evaluador”**.
+
+### Controlador
+
+`PerformanceProcessController -> actionEditarEvaluatorTest`
+
+Internamente llama a 
+
+`PerformanceProcessController->_enviarCorreoAsignacionTest`
+
+Que invoca directamente \$app->mailer sin reutilizar las funciones de notificacion que se describieron antes con PerformanceProcessController->sendEmails
+
+### Vista
+
+/mail/test-notificar-asignacion-evaluator.php
+
+---
+
+## 5) (GXX) Al eliminar un colaborador
+
+### Descripción
+
+Para cada colaborador eliminado, se revisa la lista de evaluadores afectados y se les notifica la lista de evaluaciones que aún tienen pendiente
+
+### Ruta Web
+
+/performance-process/filter-tests?id=
+
+### Ubicación en Front
+
+Menu Evaluaciones -> Detalle
+
+Acciones -> **“Eliminar Colaboradores”**
+
+### Controlador
+
+`PerformanceProcessController -> actionEliminarParticipants` (individual)
+
+`PerformanceProcessController -> actionEliminarParticipantsList` (listado)
+
+Internamente llaman a 
+
+`PerformanceProcessController->sendEmails`
+
+### Vista
+
+/mail/send-test-reminder.php
+
+---
+
+## 6) (GXX) Al recrear tests perdidos
+
+### Descripción
+
+Cuando se utiliza la opción que está en cada test para recrear tests del colaborador, se notifica a los evaluadores cuando aparecer nuevos tests.
+
+### Ruta Web
+
+/performance-process/view-all-tests?id=
+
+### Ubicación en Front
+
+Menu Evaluaciones -> Detalle
+
+Acciones sobre el test -> **“Recrear tests”**.
+
+### Controlador
+
+`PerformanceProcessController->actionFixTestsForUser`
+
+Internamente llama a 
+
+`PerformanceProcessController->sendEmails`
+
+### Vista
+
+/mail/send-test-reminder.php
+
+---
+
+## 7) (GXX) Totalizar notas -> no manda correo
+
+### Descripción
+
+Esta funcionalidad fue eliminada. Antes se mandaba un email a cada participante del proceso con la nota obtenida.
+
+---
+
+## 8) (GXX) Inicio de la etapa de Feedback (correos a jefes y, condicionalmente, a colaboradores)
+
+### Descripción
+
+Al avanzar a Feedback:
+
+- Se envían correos a **jefes de área** con la lista de colaboradores a evaluar y link al LMS.
+- Si el tipo de feedback es **“Feedback con colaborador”**, se envía correo al **colaborador** con sus notas/resultados.
+
+### Ruta Web
+
+/performance-process-results/index?id=
+
+### Ubicación en Front
+
+Menu "Resultados y Calibración" -> Borón **“Avanzar a Feedback”**
+
+### Controlador
+
+`PerformanceProcessResultsController->actionEndResultsStep`
+
+Se llama directamente e \$mailer->compose
+
+### Vista
+
+- Colaboradores: Resultados personales\
+  /mail/gxd/send-results-test-mail.php
+- Jefes: Lista de personas a realizar feedback\
+  /mail/send-results-boss-area.php
+
+---
+
+## 9) Citación por agendamiento de reunión de Feedback
+
+### Descripción
+
+Notificación al colaborador confirmando la citación de reunión de feedback (cuando la reunión queda agendada). Este evento ocurre desde GXX y desde LMS.
+
+### GXX
+
+- **Ruta Web**\
+  performance-process-results/details?id=
+- **Ubicación**\
+  Menu Feedback -> Detalle -> botón calendario
+- **Controlador**\
+  `PerformanceProcessMeetingsController->actionDashboardAgendar` 
+- Vista\
+  /mail/send-scheduled-meeting-boss.php
+
+### LMS
+
+- **Ruta Web**\
+  /student/boss/home?tab=performance
+- **Ubicación**\
+  Menu "Mi Equipo" -> Desempeño -> botón calendario
+- **Controlador**\
+  `/protected/modules/student/controllers/BossController->actionSaveMeetProgram()` 
+- Vista\
+  /protected/modules/student/views/boss/\_mailFeedback.php
+
+
+
+---
+
+## 10) (GXX) Notificación al cerrar la evaluación de Feedback
+
+### Descripción
+
+Al finalizar la evaluación de feedback se envía un correo al colaborador.  con el link necesario para el flujo de **aceptar/objetar** (ese link no está disponible en otra parte de la plataforma).
+
+### GXX
+
+- **Ruta Web**\
+  /performance-process-meetings/dashboard-close?id=
+- **Ubicación**\
+  Dentro de la vista de realizar evaluación de feedback, el botón "Finalizar Feedback"
+- **Controlador**\
+  `PerformanceProcessMeetingsController->actionSendmailcolab` 
+- Vista 1: cuando **SÍ** se permite objetar resultados\
+  /mail/gxd/send-mail-meeting-colab.php
+- Vista 2: cuando **NO** se permite objetar resultados\
+  /mail/gxd/send-mail-meeting-colab-NO-REJECT.php
+
+### LMS
+
+- **Ruta Web**\
+  /student/boss/cerrarFeedback?meet\_id=
+- **Ubicación**\
+  Dentro de la vista de realizar evaluación de feedback, el botón "Finalizar Feedback"
+- **Controlador**\
+  `/protected/modules/student/controllers/BossController->actionEnviarFeedback()` 
+- Vista **única** para cuando se puede o no objetar resultados\
+  /protected/modules/student/views/boss/\_send-mail-meeting-colab.php
+
+NOTA: El correo correspondiente aun feedback donde el coladorador puede objetar los resultados contiene un link para realizar esta operación en el servidor GXX. Este es el único lugar en toda la plataforma en donde este link se presenta. Si el envío de este mail falla, el colaborador no podrá realizar la acción. (GXX) /performance-process-collaborator/accept-reject-results?parametros

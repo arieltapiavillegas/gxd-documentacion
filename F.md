@@ -50,18 +50,6 @@ Se crea por cada colaborador una entrada única en la tabla `ctv_gxd_performance
   * **Endpoint para guardar y enviar notificación**:
     (GXX) `/performance-process-meetings/sendmailcolab` -> `PerformanceProcessMeetingsController->actionSendmailcolab`
 
-**Estados de la reunión (`status`)**
-
-* **0 (Pendiente)**: Reunión creada, aún no iniciada por el evaluador.
-
-* **1 (En proceso)**: El evaluador ha guardado cambios parciales pero no ha finalizado.
-
-* **2 (Finalizada/Enviada)**: El evaluador cerró la reunión. Si el proceso permite objeción, queda a la espera de la acción del colaborador.
-
-* **3 (Aceptada)**: El colaborador aceptó el feedback recibido.
-
-* **4 (Objetada)**: El colaborador rechazó los resultados.
-
 #### 2. Componentes del Feedback
 
 Dependiendo de la configuración del proceso, se habilitan los siguientes módulos en la vista de la reunión:
@@ -114,8 +102,7 @@ Dependiendo de la configuración del proceso, se habilitan los siguientes módul
 
 * El flujo de objeción de resultados solo puede iniciarse desde el correo electrónico que manda la plataforma cuando se cierra la evaluación de feedback. Este link no está presente en ningún otro lugar de la plataforma, solo en el email.
 
-* **Objeción**: Si el colaborador marca el feedback como objetado (`status=4`), debe registrar un motivo en la tabla `ctv_gxd_performance_process_meetings` (campo `objection_reason`).
+* **Objeción**: Si el colaborador marca el resultado como objetado, se guarda en el registro de su resultado, de sus notas de a tabla la fecha de la objeción o aceptacion en los campos ctv_gxd_performance_process_test_resume.accepted/rejected=fecha actual.
 
-* **Calidad del Feedback**: Si está habilitado, tras aceptar (`status=3`), el colaborador califica la gestión de su jefe.
+* **Calidad del Feedback**: Si está habilitado, tras aceptar, el colaborador califica la gestión de su jefe y se guarda en la tabla ctv_gxd_performance_process_meetings.score_from_collab=(nota del 1-5).
 
-  * **Campo**: `ctv_gxd_performance_process_meetings.feedback_quality_score` (escala 1-5).

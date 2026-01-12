@@ -84,11 +84,11 @@
 
 * **Cambiar evaluador**:
 
-  * permite seleccionar un nuevo evaluador desde la lista de todos los usuarios activos de la institución. **API para popular el modal (lista de evaluadores)**
+  * permite seleccionar un nuevo evaluador desde la lista de todos los usuarios activos de la institución. 
 
-  * (GXX) `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest` *API para procesar el cambio de evaluador*
+  * (GXX) POST `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest` *API para procesar el cambio de evaluador*
 
-  * (GXX) `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest`
+  * (GXX) GET `performance-process/editar-evaluator-test` -> `PerformanceProcessController->actionEditarEvaluatorTest` *API para popular el modal de cambio de evaluador*
 
   * Nota: requiere que el usuario tenga una entrada en `ctv_user_profiles`; si no existe, se produce error.
 
@@ -100,11 +100,11 @@
 
 * **Cambiar estatus**:
 
-  * la evaluación solo puede ser llevada a un siguiente estatus, acorde a la lista de transiciones permitidas. **API para popular el modal con opciones**
+  * la evaluación solo puede ser llevada a un siguiente estatus, acorde a la lista de transiciones permitidas. 
 
-  * (GXX) `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest` **API para procesar cambio de estatus**
+  * (GXX) POST `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest` *API para procesar cambio de estatus*
 
-  * (GXX) `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest`
+  * (GXX) GET `performance-process/editar-status-test` -> `PerformanceProcessController->actionEditarStatusTest` *API para popular el modal con opciones*
 
   * Transiciones permitidas referidas en `PerformanceTests::STATUS_FLUJO`:
 
@@ -124,5 +124,3 @@
   * **UI**: La opción aparece junto a cada evaluación; si el colaborador tiene muchas evaluaciones, el **mismo link** puede aparecer varias veces, ya que la acción se ejecuta sobre el **evaluado** (usuario) y no sobre una evaluación específica.
 
   * Controlador: (GXX) `performance-process/fix-tests-for-user` -> `PerformanceProcessController->actionFixTestsForUser`
-
-  * Ejemplo URL: (GXX) `performance-process/fix-tests-for-user?user_id=142262&process_id=780`
