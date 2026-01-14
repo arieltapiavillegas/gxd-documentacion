@@ -14,7 +14,6 @@
 
 * Servidor/Framework: **GXX (Yii2)**
 
-* Ubicación (alto nivel): (pendiente)
 
 ### Alcance funcional (visión general)
 
